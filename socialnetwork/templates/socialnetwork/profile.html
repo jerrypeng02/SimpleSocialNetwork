@@ -1,0 +1,50 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <div>
+        <span id="id_logged_in_user_name">{{ user.first_name }} {{ user.last_name }}</span>
+    </div>
+    <div class="dropdown">
+        <button id="id_show_nav_button" onclick="myFunction()" class="dropbtn">Select</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{% url 'home' %}" id="id_nav_global_stream">Global Stream</a>
+            <a href="{% url 'follower' %}" id="id_nav_follower_stream">Follower Stream</a>
+            <a href="{% url 'profile' %}" id="id_nav_profile">My Profile</a>
+            <a href="{% url 'logout' %}" id="id_nav_logout">Logout</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <p id="id_name_of_page">Profile Page for {{ user.first_name }} {{ user.last_name }}</p>
+    <form enctype="multipart/form-data" method="post" action="{% url 'update_profile' %}">
+        {% if profile.profile_picture %}
+            <img id="id_user_picture" src="{% url 'photo' profile.id %}" alt="profile photo" width="200px">
+        {% else %}
+            <img id="id_user_picture" src="/static/socialnetwork/myImg.jpg" alt="profile photo" width="200px">
+        {% endif %}
+
+        {% for field in form.visible_fields %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %} {{ error }} {% endfor %}
+            </div>
+        {% endfor %}
+        <div>
+            <button id="id_update_profile_button" type="submit">Submit</button>
+        </div>
+        {% csrf_token %}
+    </form>
+
+    <div>
+        <p>You are following: </p>
+        {% for field in following %}
+            <ul>
+                <a id="id_profile_link_{{ field.username }}" href="{% url 'user_profile' field.id %}">{{ field.first_name }} {{ field.last_name }}</a>
+                {% for error in field.errors %} {{ error }} {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+{% endblock %}

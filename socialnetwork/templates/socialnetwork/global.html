@@ -1,0 +1,47 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+    <div>
+        <span id="id_logged_in_user_name">{{user.first_name}} {{user.last_name}}</span>
+    </div>
+    <div class="dropdown">
+        <button id="id_show_nav_button" onclick="myFunction()" class="dropbtn">Select</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{% url 'home' %}" id="id_nav_global_stream">Global Stream</a>
+            <a href="{% url 'follower' %}" id="id_nav_follower_stream">Follower Stream</a>
+            <a href="{% url 'profile' %}" id="id_nav_profile">My Profile</a>
+            <a href="{% url 'logout' %}" id="id_nav_logout">Logout</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <p id="id_name_of_page">Global Stream</p>
+
+    <form enctype="multipart/form-data" method="post" action="{% url 'create_post' %}">
+        {{ form }}
+        {% csrf_token %}
+        <button id="id_post_button" type="submit">Submit</button>
+    </form>
+    <div>
+        <ul id="post">
+            {% for post in posts %}
+                <li id="post_by_{{ post.id }}">Post by
+                    <span id="id_post_profile_{{ post.id }}">
+                        <a href="{% url 'user_profile' post.user.id %}">
+                            {{ post.user.first_name }} {{ post.user.last_name }}
+                        </a>
+                    </span> -
+                    <span id="id_post_text_{{ post.id }}">{{ post.post_text }}</span> -
+                    <span id="id_post_date_time_{{ post.id }}">{{ post.post_date_time|date:"n/j/Y h:iA" }}</span>
+                    <ul id="comment_under_post_{{ post.id }}"></ul>
+                    <label>New Comment: </label>
+                    <input type="text" id="id_comment_input_text_{{ post.id }}">
+                    <button id="id_comment_button_{{ post.id }}" type="submit" onclick="addComment({{ post.id }})">Submit</button>
+                    <spanf class="error"></spanf>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="/static/socialnetwork/globalstream.js"></script>
+{% endblock %}
