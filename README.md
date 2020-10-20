@@ -1,1 +1,2 @@
-Mostly the forms, the login html page, the base html page, the register page, and the css parts refers to the forms-example.
+# Simple Social Network
+A simple social network application that allows users to register, login, create bio, upload profile picture, create posts, comment on other posts, follow and unfollow users. Besides HTML, CSS, and JavaScript, the application utilized Django framework, AJAX and jQuery to deal with the backend logics of different requests, and the frontend user interactions, and deploying with the AWS EC2.
