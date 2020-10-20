@@ -22,7 +22,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'socialnetwork/static/images/')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8gggw3mvmb75@2f2s(ft2-8n7hxs6xm^8)4*^-p3*#nd_=@0dl'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
